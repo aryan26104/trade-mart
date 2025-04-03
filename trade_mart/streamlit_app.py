@@ -113,7 +113,7 @@ def main():
                         st.session_state.username = user['username']
                         st.session_state.user_type = user['user_type']
                         st.success("Login successful!")
-                        st.experimental_rerun()
+                        st.rerun()
                     else:
                         st.error("Invalid username or password")
         
@@ -137,7 +137,7 @@ def main():
             st.session_state.user_id = None
             st.session_state.username = None
             st.session_state.user_type = None
-            st.experimental_rerun()
+            st.rerun()
         
         # Navigation based on user type
         if st.session_state.user_type == "buyer":
@@ -195,7 +195,7 @@ def main():
                     if st.button(f"View Details", key=f"view_{product['id']}"):
                         st.session_state.page = "product_detail"
                         st.session_state.product_id = product['id']
-                        st.experimental_rerun()
+                        st.rerun()
 
 if __name__ == "__main__":
     main() 
