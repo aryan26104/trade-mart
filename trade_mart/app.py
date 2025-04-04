@@ -7,10 +7,14 @@ import string
 from werkzeug.utils import secure_filename
 import time
 from sqlalchemy import func
+from dotenv import load_dotenv
+
+# Load environment variables from .env file if it exists
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'trademartkey123'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trademart.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'trademartkey123')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI', 'sqlite:///trademart.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Currency used throughout the application is Indian Rupees (₹)
@@ -1989,7 +1993,15 @@ def check_notifications():
         'new_offers': new_offers
     })
 
+# Initialize database when imported in a production environment
+with app.app_context():
+    try:
+        db.create_all()
+        # Only initialize with sample data if tables are empty
+        if Category.query.count() == 0:
+            init_db()
+    except Exception as e:
+        print(f"Error during automatic database initialization: {e}")
+
 if __name__ == '__main__':
-    with app.app_context():
-        init_db()
-    app.run(debug=True) 
+    app.run(debug=True)

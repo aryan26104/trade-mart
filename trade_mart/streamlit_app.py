@@ -196,6 +196,16 @@ def main():
                         st.session_state.page = "product_detail"
                         st.session_state.product_id = product['id']
                         st.rerun()
+    
+    # Footer section
+    st.markdown("---")
+    footer_col1, footer_col2, footer_col3 = st.columns(3)
+    with footer_col1:
+        st.write("")
+    with footer_col2:
+        st.markdown("<div style='text-align: center;'><p>© 2023 Trade Mart | Developed by Karan</p><p>Contact: abc@abc.com | Phone: 9999999999</p></div>", unsafe_allow_html=True)
+    with footer_col3:
+        st.write("")
 
 if __name__ == "__main__":
-    main() 
+    main()
